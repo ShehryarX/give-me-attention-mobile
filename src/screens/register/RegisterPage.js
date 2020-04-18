@@ -1,10 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Button } from "../../common/Button";
 import { FormTextInput } from "../../common/FormTextInput";
 import { COLOURS } from "../../config/colors";
 import { observer } from "mobx-react";
 import { RegisterStore } from "./state";
+import Ionicons from "react-native-ionicons";
 
 @observer
 export class RegisterPage extends React.Component {
@@ -15,6 +16,21 @@ export class RegisterPage extends React.Component {
       <View style={styles.container}>
         <View style={styles.form}>
           <Text style={styles.heading}>Register.</Text>
+          <TouchableOpacity
+            style={styles.avatar}
+            onPress={this.state.handlePickAvatar}
+          >
+            <Image
+              source={{ uri: this.state.avatar }}
+              style={styles.avatarPlaceholder}
+            />
+            <Ionicons
+              name="ios-add"
+              size={40}
+              color="#FFF"
+              style={{ marginTop: 10 }}
+            ></Ionicons>
+          </TouchableOpacity>
           <FormTextInput
             value={this.state.email}
             onChangeText={this.state.handleEmailChange}
@@ -67,5 +83,18 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     marginTop: 40,
+  },
+  avatarPlaceholder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "#E1E2E6",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
 });

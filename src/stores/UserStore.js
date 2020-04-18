@@ -26,7 +26,7 @@ class UserStoreImpl {
   friendRequestsList = [];
 
   @action
-  async createNewUser(email, username, password) {
+  async createNewUser(email, username, password, avatar) {
     email = email.toLowerCase();
 
     firebase

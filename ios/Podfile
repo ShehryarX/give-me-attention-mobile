@@ -5,6 +5,12 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 target 'givemeattentionmobile' do
   rnPrefix = "../node_modules/react-native"
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  # Permission for getting picture
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
+  pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary.podspec"
+
 
   # React Native and its dependencies
   pod 'FBLazyVector', :path => "#{rnPrefix}/Libraries/FBLazyVector"
