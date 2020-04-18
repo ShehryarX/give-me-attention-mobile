@@ -12,20 +12,22 @@ export class LoginPage extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+      >
         <View style={styles.form}>
           <FormTextInput
             value={this.state.email}
             onChangeText={this.state.handleEmailChange}
             returnKeyType="done"
-            placeholder={"Email"}
+            label={"Email"}
           />
           <FormTextInput
             value={this.state.password}
             secureTextEntry={true}
             returnKeyType="done"
             onChangeText={this.state.handlePasswordChange}
-            placeholder={"Password"}
+            label={"Password"}
           />
           <Button label={"Login"} onPress={this.state.handleLoginPress} />
         </View>
@@ -37,7 +39,7 @@ export class LoginPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLOURS.WHITE,
+    backgroundColor: COLOURS.DODGER_BLUE,
     alignItems: "center",
     width: "100%",
     justifyContent: "space-between",

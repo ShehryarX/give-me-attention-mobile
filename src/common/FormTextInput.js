@@ -1,25 +1,30 @@
 import * as React from "react";
-import { StyleSheet, TextInput, TextInputProps } from "react-native";
+import { StyleSheet, View, TextInputProps } from "react-native";
 import { COLOURS } from "../config/colors";
+import { TextField } from "react-native-material-textfield";
 
 export class FormTextInput extends React.Component {
   render() {
     const { style, ...otherProps } = this.props;
     return (
-      <TextInput
-        selectionColor={COLOURS.DODGER_BLUE}
-        style={[styles.textInput, style]}
-        {...otherProps}
-      />
+      <View style={styles.container}>
+        <TextField
+          selectionColor={COLOURS.DODGER_BLUE}
+          style={[styles.textInput, style]}
+          autoCapitalize="none"
+          tintColor={COLOURS.ALMOST_WHITE}
+          baseColor={COLOURS.DODGER_BLUE_LIGHTER}
+          placeholderTextColor={COLOURS.LIGHT_SILVER}
+          {...otherProps}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   textInput: {
-    height: 40,
-    borderColor: COLOURS.SILVER,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 20,
+    color: COLOURS.WHITE,
+    fontSize: 13
   },
 });

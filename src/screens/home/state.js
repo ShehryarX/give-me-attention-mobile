@@ -1,6 +1,5 @@
 import { observable, action } from "mobx";
-import { ProfileController } from "../../controllers/ProfileController";
-import { UserStore } from "../../stores/UserStore";
+import ProfileStore from "../../stores/ProfileStore";
 
 export class HomeStore {
   @observable
@@ -13,16 +12,16 @@ export class HomeStore {
 
   @action
   handleAddFriend = () => {
-    ProfileController.sendFriendRequestToUsername(this.friendusername);
+    ProfileStore.sendFriendRequest("rishabh", this.friendusername);
   };
 
   @action
   GetFriendsList = () => {
-    return UserStore.friendsList;
+    ProfileStore.returnFriendsList("rishabh");
   };
 
   @action
   AcceptFriendRequest = () => {
-    ProfileController.addFriend(this.friendusername);
+    ProfileStore.acceptFriendRequest("rishabh", this.friendusername);
   };
 }
