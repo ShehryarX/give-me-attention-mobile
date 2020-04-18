@@ -1,0 +1,17 @@
+{
+  "name": "give-me-attention-mobile",
+  "displayName": "give-me-attention-mobile",
+  "expo": {
+    "name": "give-me-attention-mobile",
+    "slug": "give-me-attention-mobile",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
