@@ -1,5 +1,5 @@
 import { observable, action } from "mobx";
-import UserStore from "../../stores/UserStore";
+import { UserStore } from "../../stores/UserStore";
 
 export class RegisterStore {
   @observable

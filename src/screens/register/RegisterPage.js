@@ -8,16 +8,11 @@ import { RegisterStore } from "./state";
 
 @observer
 export class RegisterPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = new RegisterStore();
-  }
+  state = new RegisterStore();
 
   render() {
     return (
-      <View
-        style={styles.container}
-      >
+      <View style={styles.container}>
         <View style={styles.form}>
           <Text style={styles.heading}>Register.</Text>
           <FormTextInput
@@ -57,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     justifyContent: "space-between",
-    backgroundColor: COLOURS.DODGER_BLUE
+    backgroundColor: COLOURS.DODGER_BLUE,
   },
   form: {
     flex: 1,
@@ -67,10 +62,10 @@ const styles = StyleSheet.create({
   heading: {
     color: COLOURS.WHITE,
     fontSize: 50,
-    fontWeight: 'bold',
-    marginBottom: 15
+    fontWeight: "bold",
+    marginBottom: 15,
   },
   actionButton: {
-    marginTop: 40
-  }
+    marginTop: 40,
+  },
 });
