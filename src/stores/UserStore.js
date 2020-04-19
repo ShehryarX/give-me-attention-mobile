@@ -97,16 +97,16 @@ class UserStoreImpl {
 
   @action
   signInUser(email, password) {
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        firebase
+        return firebase
           .database()
           .ref("/")
           .child("users")
           .orderByChild("email")
-          .equalTo(this.email.toLowerCase())
+          .equalTo(email.toLowerCase())
           .on("value", (snapshot) => {
             const databaseVal = snapshot.val();
             this.uid = firebase.auth().currentUser.uid;
@@ -118,7 +118,10 @@ class UserStoreImpl {
               databaseVal[this.username]["friendRequests"];
           });
       })
-      .catch(() => this.setError(true, "Incorrect password"));
+      .catch((err) => {
+        console.log(err);
+        this.setError(true, "Incorrect password")
+      });
   }
 
   @action
