@@ -44,8 +44,9 @@ export class HomePage extends React.Component {
           <View style={styles.headerButtonContainer}>
             <Button
               style={styles.headerButton}
-              label="Send All"
+              label="Leaderboard"
               lightButton={true}
+              onPress={() => this.props.navigation.navigate('Leaderboard')}
             />
           </View>
         </View>

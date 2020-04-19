@@ -29,7 +29,7 @@ class UserStoreImpl {
   async createNewUser(email, username, password, avatar) {
     email = email.toLowerCase();
 
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async () => {
