@@ -25,6 +25,33 @@ class UserStoreImpl {
   @observable
   friendRequestsList = [];
 
+  @observable
+  userAvatar = "";
+
+  uploadPhoto = async (uri) => {
+    console.log("Now we're uploading");
+    const path = `users/${this.username}/avatar/profile_pic.jpg`;
+    return new Promise(async (res, rej) => {
+      const response = await fetch(uri);
+      const file = await response.blob();
+      let upload = firebase.storage().ref(path).put(file);
+
+      upload.on(
+        "state_changed",
+        (snapshot) => {},
+        (err) => {
+          console.log("error " + err);
+          rej(err);
+        },
+        async () => {
+          console.log("success in uploading");
+          const url = await upload.snapshot.ref.getDownloadURL();
+          res(url);
+        }
+      );
+    });
+  };
+
   @action
   async createNewUser(email, username, password, avatar) {
     email = email.toLowerCase();
@@ -52,6 +79,7 @@ class UserStoreImpl {
         this.uid = firebase.auth().currentUser.uid;
         this.isUserSignedIn = true;
         this.friendsList = this.friendRequestsList = [];
+        this.uploadPhoto(avatar);
       })
       .catch(() => this.setError(true, "Error creating new user"));
   }
