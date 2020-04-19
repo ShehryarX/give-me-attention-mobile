@@ -7,7 +7,14 @@ import * as firebase from "firebase";
 
 class ProfileActionController {
   async pingFriend(friendUsername) {
-    await ProfileController.doesUserExistAsFriend(friendUsername);
+    const isUserAFriend = await ProfileController.doesUserExistAsFriend(
+      friendUsername
+    );
+
+    if (!isUserAFriend) {
+      Logger.log(`${friendUsername} is not a friend!`);
+      return;
+    }
 
     const storageKey = `${UserStore.username}-${friendUsername}`;
 
@@ -17,10 +24,15 @@ class ProfileActionController {
       previousPings = [];
     }
 
+    Logger.log(
+      `Attempting to push to messages with retrieved async storage item ${previousPings}`
+    );
+
     if (
       previousPings.length <= 5 ||
       moment.duration(previousPings[previousPings.length - 1]).asMinutes() > 30
     ) {
+      Logger.log("Pushing to messages/");
       firebase.database().ref("/messages/").push({
         to: friendUsername,
         from: UserStore.username,

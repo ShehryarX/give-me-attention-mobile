@@ -14,6 +14,8 @@ import { UserStore } from "../../stores/UserStore";
 import { COLOURS } from "../../config/colors";
 import { ContactCard } from "./ContactCard";
 import { observer } from "mobx-react";
+import { Logger } from "../../logging/Logger";
+import { ProfileActionController } from "../../controllers/ProfileActionController";
 
 @observer
 export class HomePage extends React.Component {
@@ -49,25 +51,28 @@ export class HomePage extends React.Component {
               style={styles.headerButton}
               label="Leaderboard"
               lightButton={true}
-              onPress={() => this.props.navigation.navigate('Leaderboard')}
+              onPress={() => this.props.navigation.navigate("Leaderboard")}
             />
           </View>
         </View>
         <View style={styles.contacts}>
-          {
-            UserStore.friendsList ?
-              UserStore.friendsList.map(friend => {
+          {UserStore.friendsList
+            ? UserStore.friendsList.map((friend) => {
                 return (
                   <ContactCard
                     imageURL={friend.pictureURL}
                     name={friend.username}
-                    onPress={() => console.log("clicked!")}
+                    onPress={() => {
+                      Logger.log(
+                        `Pressed ${friend.username}. Initiating push notification.`
+                      );
+                      ProfileActionController.pingFriend(friend.username);
+                    }}
                     style={styles.contact}
                   />
                 );
               })
-            : null
-          }
+            : null}
         </View>
       </ScrollView>
     );
