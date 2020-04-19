@@ -15,7 +15,9 @@ admin.initializeApp(functions.config().firebase);
 exports.pushNotification = functions.database
   .ref("/messages/{pushId}")
   .onWrite((event) => {
-    const valueObject = event.data.val();
+    console.log("STRINGIFIED:");
+    console.log(JSON.stringify(event));
+    const valueObject = event.after.val();
 
     const payload = {
       notification: {
