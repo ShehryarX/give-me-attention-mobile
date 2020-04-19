@@ -51,4 +51,6 @@ target 'givemeattentionmobile' do
   use_native_modules!
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
 end
