@@ -15,6 +15,18 @@ class ProfileControllerImpl {
     return snapshot.exists();
   }
 
+  async getProfileByUsername(username) {
+    const snapshot = await firebase
+      .database()
+      .ref("/")
+      .child("users")
+      .orderByChild("username")
+      .equalTo(username)
+      .once("value");
+
+    return snapshot.val();
+  }
+
   async doesUserExistAsFriend(friendUsername) {
     const snapshot = await firebase
       .database()
