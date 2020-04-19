@@ -7,6 +7,10 @@ import { Platform } from "react-native";
 import { check, PERMISSIONS, request } from "react-native-permissions";
 
 export class RegisterStore {
+  constructor(props) {
+    this.navigation = props.navigation;
+  }
+
   @observable
   email = "";
 
@@ -41,7 +45,7 @@ export class RegisterStore {
       this.username,
       this.password,
       this.avatar
-    );
+    ).then(() => this.navigation.navigate('Home'));
   };
 
   @action

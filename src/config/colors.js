@@ -10,4 +10,7 @@ export const COLOURS = {
   SILVER: "#BEBEBE",
   TORCH_RED: "#F8262F",
   MISCHKA: "#E5E4E6",
+  GOLDEN: "#FFD54F",
+  PURPLE: "#AB47BC",
+  CYAN: "#4DD0E1"
 };
