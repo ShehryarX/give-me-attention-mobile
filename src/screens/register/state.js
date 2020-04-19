@@ -45,7 +45,11 @@ export class RegisterStore {
       this.username,
       this.password,
       this.avatar
-    ).then(() => this.navigation.navigate('Home'));
+    ).then(() => {
+      if(UserStore.isUserSignedIn) {
+        this.navigation.navigate('Home');
+      }
+    });
   };
 
   @action
