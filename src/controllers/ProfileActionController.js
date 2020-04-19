@@ -37,7 +37,6 @@ class ProfileActionController {
         `${UserStore.username} pinged ${friendUsername} with log: ${newPings}`
       );
     } else {
-      // otherwise do not!
       Logger.error(
         `${UserStore.username} tried to ping ${friendUsername} with log: ${previousPings}`
       );

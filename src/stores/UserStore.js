@@ -77,6 +77,10 @@ class UserStoreImpl {
         this.isUserSignedIn = true;
         this.friendsList = this.friendRequestsList = [];
         this.uploadPhoto(avatar);
+        firebase
+          .messaging()
+          .subscribeToTopic(this.username)
+          .then(() => Logger.log(`Subscribed to topic ${username}!`));
       })
       .catch(() => this.setError(true, "Error creating new user"));
   }
@@ -114,28 +118,38 @@ class UserStoreImpl {
             this.isUserSignedIn = true;
             this.username =
               databaseVal[Object.keys(databaseVal)[0]]["username"];
-            this.userAvatar = await ProfileController.getProfilePictureURL(this.username);
+            this.userAvatar = await ProfileController.getProfilePictureURL(
+              this.username
+            );
             const friends = databaseVal[this.username]["friends"];
             //this.friendsList = await Promise.all(Object.values(friends).pop().map());
             this.friendsList = [];
             Object.values(friends).forEach(async (friend) => {
-              if(friend.username) {
+              if (friend.username) {
                 let username = friend.username;
-                let userObj = await ProfileController.getProfileByUsername(username);
+                let userObj = await ProfileController.getProfileByUsername(
+                  username
+                );
                 userObj = userObj[username];
-                let pictureURL = await ProfileController.getProfilePictureURL(username);
+                let pictureURL = await ProfileController.getProfilePictureURL(
+                  username
+                );
                 userObj.pictureURL = pictureURL;
                 this.friendsList.push(userObj);
                 console.log(this.friendsList);
               }
-            })
+            });
             this.friendRequestsList =
               databaseVal[this.username]["friendRequests"];
+            firebase
+              .messaging()
+              .subscribeToTopic(this.username)
+              .then(() => Logger.log(`Subscribed to topic ${username}!`));
           });
       })
       .catch((err) => {
         console.log(err);
-        this.setError(true, "Incorrect password")
+        this.setError(true, "Incorrect password");
       });
   }
 

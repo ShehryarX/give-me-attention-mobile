@@ -1,9 +1,4 @@
-import { AsyncStorage } from "react-native";
-import { ProfileController } from "./ProfileController";
 import { UserStore } from "../stores/UserStore";
-import moment from "moment";
-import { Logger } from "../logging/Logger";
-import * as firebase from "firebase";
 import { action, observable } from "mobx";
 import { observer } from "mobx-react";
 
