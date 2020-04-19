@@ -13,11 +13,14 @@ import { HomeStore } from "./state";
 import { UserStore } from "../../stores/UserStore";
 import { COLOURS } from "../../config/colors";
 import { ContactCard } from "./ContactCard";
+import { observer } from "mobx-react";
 
+@observer
 export class HomePage extends React.Component {
   state = new HomeStore();
 
   render() {
+    console.log(this.state.friendsList);
     return (
       <ScrollView
         style={styles.container}
@@ -27,11 +30,11 @@ export class HomePage extends React.Component {
           <Text style={styles.needAttention}>give me attention!</Text>
           <Image
             source={{
-              uri: "https://placekitten.com/400/400",
+              uri: UserStore.userAvatar,
             }}
             style={[styles.dp, styles.dpLarge]}
           />
-          <Text style={styles.username}>yousername</Text>
+          <Text style={styles.username}>{UserStore.username}</Text>
         </View>
         <View style={styles.header}>
           <View style={styles.headerButtonContainer}>
@@ -44,48 +47,27 @@ export class HomePage extends React.Component {
           <View style={styles.headerButtonContainer}>
             <Button
               style={styles.headerButton}
-              label="Send All"
+              label="Leaderboard"
               lightButton={true}
+              onPress={() => this.props.navigation.navigate('Leaderboard')}
             />
           </View>
         </View>
         <View style={styles.contacts}>
-          <ContactCard
-            imageURL="https://placekitten.com/300/300"
-            name="Hello Kitty"
-            onPress={() => console.log("clicked!")}
-            style={styles.contact}
-          />
-          <ContactCard
-            imageURL="https://placekitten.com/350/350"
-            name="Tom Cat"
-            onPress={() => console.log("clicked!")}
-            style={styles.contact}
-          />
-          <ContactCard
-            imageURL="https://placekitten.com/400/400"
-            name="Hello Kitty"
-            onPress={() => console.log("clicked!")}
-            style={styles.contact}
-          />
-          <ContactCard
-            imageURL="https://placekitten.com/450/450"
-            name="Tom Cat"
-            onPress={() => console.log("clicked!")}
-            style={styles.contact}
-          />
-          <ContactCard
-            imageURL="https://placekitten.com/200/200"
-            name="Hello Kitty"
-            onPress={() => console.log("clicked!")}
-            style={styles.contact}
-          />
-          <ContactCard
-            imageURL="https://placekitten.com/250/250"
-            name="Tom Cat"
-            onPress={() => console.log("clicked!")}
-            style={styles.contact}
-          />
+          {
+            UserStore.friendsList ?
+              UserStore.friendsList.map(friend => {
+                return (
+                  <ContactCard
+                    imageURL={friend.pictureURL}
+                    name={friend.username}
+                    onPress={() => console.log("clicked!")}
+                    style={styles.contact}
+                  />
+                );
+              })
+            : null
+          }
         </View>
       </ScrollView>
     );

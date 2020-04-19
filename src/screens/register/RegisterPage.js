@@ -6,12 +6,17 @@ import { COLOURS } from "../../config/colors";
 import { observer } from "mobx-react";
 import { RegisterStore } from "./state";
 import Ionicons from "react-native-ionicons";
+import { UserStore } from "../../stores/UserStore";
 
 @observer
 export class RegisterPage extends React.Component {
-  state = new RegisterStore();
+  constructor(props) {
+    super(props);
+    this.state = new RegisterStore(props);
+  }
 
   render() {
+    //if(UserStore.isUserSignedIn) this.props.navigation.navigate('Home');
     return (
       <View style={styles.container}>
         <View style={styles.form}>
@@ -56,6 +61,11 @@ export class RegisterPage extends React.Component {
               onPress={this.state.handleCreateUserAccount}
             />
           </View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Login')}
+          >
+            <Text style={styles.gotoLogin}>Already have an account? Click here to login.</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -97,4 +107,9 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
   },
+  gotoLogin: {
+    color: COLOURS.DODGER_BLUE_LIGHTER,
+    marginVertical: 20,
+    textAlign: 'center'
+  }
 });

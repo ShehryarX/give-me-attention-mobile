@@ -52,7 +52,7 @@ class UserStoreImpl {
   async createNewUser(email, username, password, avatar) {
     email = email.toLowerCase();
 
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async () => {
@@ -70,6 +70,7 @@ class UserStoreImpl {
             friendRequests: {
               username: "0",
             },
+            notificationsReceived: "0",
           });
         this.username = username;
         this.uid = firebase.auth().currentUser.uid;
@@ -97,28 +98,45 @@ class UserStoreImpl {
 
   @action
   signInUser(email, password) {
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        firebase
+        return firebase
           .database()
           .ref("/")
           .child("users")
           .orderByChild("email")
-          .equalTo(this.email.toLowerCase())
-          .on("value", (snapshot) => {
+          .equalTo(email.toLowerCase())
+          .on("value", async (snapshot) => {
             const databaseVal = snapshot.val();
             this.uid = firebase.auth().currentUser.uid;
             this.isUserSignedIn = true;
             this.username =
               databaseVal[Object.keys(databaseVal)[0]]["username"];
-            this.friends = databaseVal[this.username]["friends"];
+            this.userAvatar = await ProfileController.getProfilePictureURL(this.username);
+            const friends = databaseVal[this.username]["friends"];
+            //this.friendsList = await Promise.all(Object.values(friends).pop().map());
+            this.friendsList = [];
+            Object.values(friends).forEach(async (friend) => {
+              if(friend.username) {
+                let username = friend.username;
+                let userObj = await ProfileController.getProfileByUsername(username);
+                userObj = userObj[username];
+                let pictureURL = await ProfileController.getProfilePictureURL(username);
+                userObj.pictureURL = pictureURL;
+                this.friendsList.push(userObj);
+                console.log(this.friendsList);
+              }
+            })
             this.friendRequestsList =
               databaseVal[this.username]["friendRequests"];
           });
       })
-      .catch(() => this.setError(true, "Incorrect password"));
+      .catch((err) => {
+        console.log(err);
+        this.setError(true, "Incorrect password")
+      });
   }
 
   @action
