@@ -3,6 +3,7 @@ import { ProfileController } from "./ProfileController";
 import { UserStore } from "../stores/UserStore";
 import moment from "moment";
 import { Logger } from "../logging/Logger";
+import * as firebase from "firebase";
 
 class ProfileActionController {
   async pingFriend(friendUsername) {
@@ -20,8 +21,11 @@ class ProfileActionController {
       previousPings.length <= 5 ||
       moment.duration(previousPings[previousPings.length - 1]).asMinutes() > 30
     ) {
-      // now we must ping the user!
-      // Firebase.pingUsername(username);
+      firebase.database().ref("/messages/").push({
+        to: friendUsername,
+        from: UserStore.username,
+      });
+
       previousPings.append(moment().toDate());
 
       if (previousPings.length > 6) {
