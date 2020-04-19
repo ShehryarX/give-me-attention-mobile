@@ -107,13 +107,27 @@ class UserStoreImpl {
           .child("users")
           .orderByChild("email")
           .equalTo(email.toLowerCase())
-          .on("value", (snapshot) => {
+          .on("value", async (snapshot) => {
             const databaseVal = snapshot.val();
             this.uid = firebase.auth().currentUser.uid;
             this.isUserSignedIn = true;
             this.username =
               databaseVal[Object.keys(databaseVal)[0]]["username"];
-            this.friends = databaseVal[this.username]["friends"];
+            this.userAvatar = await ProfileController.getProfilePictureURL(this.username);
+            const friends = databaseVal[this.username]["friends"];
+            //this.friendsList = await Promise.all(Object.values(friends).pop().map());
+            this.friendsList = [];
+            Object.values(friends).forEach(async (friend) => {
+              if(friend.username) {
+                let username = friend.username;
+                let userObj = await ProfileController.getProfileByUsername(username);
+                userObj = userObj[username];
+                let pictureURL = await ProfileController.getProfilePictureURL(username);
+                userObj.pictureURL = pictureURL;
+                this.friendsList.push(userObj);
+                console.log(this.friendsList);
+              }
+            })
             this.friendRequestsList =
               databaseVal[this.username]["friendRequests"];
           });
