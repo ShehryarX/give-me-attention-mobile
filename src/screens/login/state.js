@@ -26,6 +26,8 @@ export class LoginStore {
   handleLoginPress = () => {
     UserStore
       .signInUser(this.email, this.password)
-      .then(() => this.navigation.navigate('Home'));
+      .then(() => {
+        if(UserStore.isUserSignedIn) this.navigation.navigate('Home');
+      });
   };
 }
