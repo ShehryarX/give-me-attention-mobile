@@ -81,6 +81,10 @@ class UserStoreImpl {
           .messaging()
           .subscribeToTopic(this.username)
           .then(() => Logger.log(`Subscribed to topic ${username}!`));
+
+        firebase.messaging().onMessage((payload) => {
+          console.log("Message received. ", payload);
+        });
       })
       .catch(() => this.setError(true, "Error creating new user"));
   }
