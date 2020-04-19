@@ -5,7 +5,7 @@ import moment from "moment";
 import { Logger } from "../logging/Logger";
 import * as firebase from "firebase";
 
-class ProfileActionController {
+class ProfileActionControllerImpl {
   async pingFriend(friendUsername) {
     const isUserAFriend = await ProfileController.doesUserExistAsFriend(
       friendUsername
@@ -18,9 +18,9 @@ class ProfileActionController {
 
     const storageKey = `${UserStore.username}-${friendUsername}`;
 
-    const previousPings = AsyncStorage.getItem(storageKey);
+    let previousPings = await AsyncStorage.getItem(storageKey);
 
-    if (previousPings == null) {
+    if (!previousPings) {
       previousPings = [];
     }
 
@@ -38,7 +38,7 @@ class ProfileActionController {
         from: UserStore.username,
       });
 
-      previousPings.append(moment().toDate());
+      previousPings.push(moment().toDate());
 
       if (previousPings.length > 6) {
         previousPings.shift();
@@ -56,4 +56,4 @@ class ProfileActionController {
   }
 }
 
-export const ProfileActionController = new ProfileActionController();
+export const ProfileActionController = new ProfileActionControllerImpl();
