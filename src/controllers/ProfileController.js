@@ -41,7 +41,8 @@ class ProfileControllerImpl {
       .child(`users/${UserStore.username}/`)
       .child("friends")
       .orderByChild("username")
-      .equalTo(friendUsername);
+      .equalTo(friendUsername)
+      .once("value");
 
     return snapshot.exists();
   }
