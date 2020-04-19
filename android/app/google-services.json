@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "307141263949",
+    "firebase_url": "https://give-me-attention-72cd4.firebaseio.com",
+    "project_id": "give-me-attention-72cd4",
+    "storage_bucket": "give-me-attention-72cd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307141263949:android:4bc430d2bcda00724d1204",
+        "android_client_info": {
+          "package_name": "com.givemeattention"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307141263949-efnokgg9463nfcohjiomub5mgjj1pkrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Xj9_GQMQ32P8DcM_sJLZjaTuyT-62kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307141263949-efnokgg9463nfcohjiomub5mgjj1pkrk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307141263949:android:46babd199dc7032d4d1204",
+        "android_client_info": {
+          "package_name": "com.givemeattentionmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307141263949-efnokgg9463nfcohjiomub5mgjj1pkrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Xj9_GQMQ32P8DcM_sJLZjaTuyT-62kc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307141263949-efnokgg9463nfcohjiomub5mgjj1pkrk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
