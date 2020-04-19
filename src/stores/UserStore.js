@@ -70,6 +70,7 @@ class UserStoreImpl {
             friendRequests: {
               username: "0",
             },
+            notificationsReceived: "0",
           });
         this.username = username;
         this.uid = firebase.auth().currentUser.uid;
