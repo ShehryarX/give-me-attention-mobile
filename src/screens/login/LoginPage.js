@@ -5,13 +5,17 @@ import { FormTextInput } from "../../common/FormTextInput";
 import { COLOURS } from "../../config/colors";
 import { observer } from "mobx-react";
 import { LoginStore } from "./state";
+import { UserStore } from "../../stores/UserStore";
 
 @observer
 export class LoginPage extends React.Component {
-  state = new LoginStore();
+  constructor(props) {
+    super(props);
+    this.state = new LoginStore(props);
+  }
 
   render() {
-    if(UserStore.isUserSignedIn) this.props.navigation.navigate('Home');
+    //if(UserStore.isUserSignedIn) this.props.navigation.navigate('Home');
     return (
       <View
         style={styles.container}

@@ -16,7 +16,7 @@ export class RegisterPage extends React.Component {
   }
 
   render() {
-    if(UserStore.isUserSignedIn) this.props.navigation.navigate('Home');
+    //if(UserStore.isUserSignedIn) this.props.navigation.navigate('Home');
     return (
       <View style={styles.container}>
         <View style={styles.form}>

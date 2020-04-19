@@ -10,6 +10,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { LeaderboardPage } from "./src/screens/leaderboard/LeaderboardPage";
+import { ProfileController } from "./src/controllers/ProfileController";
 
 @observer
 class App extends React.Component {
@@ -17,7 +18,6 @@ class App extends React.Component {
     const { isUserSignedIn } = UserStore;
 
     const Stack = createStackNavigator();
-
     return (
       <NavigationContainer>
         <Stack.Navigator headerMode="none">

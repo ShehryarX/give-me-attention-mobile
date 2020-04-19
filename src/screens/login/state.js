@@ -1,6 +1,11 @@
 import { observable, action } from "mobx";
+import { UserStore } from "../../stores/UserStore";
 
 export class LoginStore {
+  constructor(props) {
+    this.navigation = props.navigation;
+  }
+
   @observable
   email = "";
 
@@ -18,7 +23,9 @@ export class LoginStore {
   };
 
   @action
-  handleLoginPressed = () => {
-    console.log("Login button pressed");
+  handleLoginPress = () => {
+    UserStore
+      .signInUser(this.email, this.password)
+      .then(() => this.navigation.navigate('Home'));
   };
 }

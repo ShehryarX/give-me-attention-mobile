@@ -27,6 +27,13 @@ class ProfileControllerImpl {
     return snapshot.val();
   }
 
+  async getProfilePictureURL(username) {
+    return await firebase
+      .storage()
+      .ref(`users/${username}/avatar/profile_pic.jpg`)
+      .getDownloadURL();
+  }
+
   async doesUserExistAsFriend(friendUsername) {
     const snapshot = await firebase
       .database()
