@@ -58,32 +58,51 @@ class UserStoreImpl {
       .then(async () => {
         await ProfileController.assertUsernameDoesNotExist(email);
 
-        firebase
-          .database()
-          .ref(`users/${username}`)
-          .set({
-            username,
-            email,
-            friends: {
-              username: "0",
-            },
-            friendRequests: {
-              username: "0",
-            },
-            notificationsReceived: "0",
-          });
-        this.username = username;
-        this.uid = firebase.auth().currentUser.uid;
-        this.isUserSignedIn = true;
-        this.friendsList = this.friendRequestsList = [];
-        this.uploadPhoto(avatar);
-        firebase
-          .messaging()
-          .subscribeToTopic(this.username)
-          .then(() => Logger.log(`Subscribed to topic ${username}!`));
-        firebase.messaging().onMessage((payload) => {
-          console.log("Message received. ", payload);
-        });
+        const enabled = await firebase.messaging().hasPermission();
+        if (enabled) {
+          firebase
+            .messaging()
+            .getToken()
+            .then((fcmToken) => {
+              if (fcmToken) {
+                console.log(fcmToken);
+                firebase
+                  .database()
+                  .ref("/users/" + Math.floor(Math.random() * Math.floor(1000)))
+                  .set({
+                    username,
+                    email,
+                    friends: {
+                      username: "0",
+                    },
+                    friendRequests: {
+                      username: "0",
+                    },
+                    notificationsReceived: "0",
+                  })
+                  .then((res) => {
+                    console.log(res);
+                  });
+                firebase.database().ref(`users/${username}`).set();
+                this.username = username;
+                this.uid = firebase.auth().currentUser.uid;
+                this.isUserSignedIn = true;
+                this.friendsList = this.friendRequestsList = [];
+                this.uploadPhoto(avatar);
+                firebase
+                  .messaging()
+                  .subscribeToTopic(this.username)
+                  .then(() => Logger.log(`Subscribed to topic ${username}!`));
+                firebase.messaging().onMessage((payload) => {
+                  console.log("Message received. ", payload);
+                });
+              } else {
+                alert("user doesn't have a device token yet");
+              }
+            });
+        } else {
+          alert("no");
+        }
       })
       .catch(() => this.setError(true, "Error creating new user"));
   }
@@ -144,13 +163,13 @@ class UserStoreImpl {
             });
             this.friendRequestsList =
               databaseVal[this.username]["friendRequests"];
-            firebase
-              .messaging()
-              .subscribeToTopic(this.username)
-              .then(() => Logger.log(`Subscribed to topic ${username}!`));
-            firebase.messaging().onMessage((payload) => {
-              console.log("Message received. ", payload);
-            });
+            // firebase
+            //   .messaging()
+            //   .subscribeToTopic(this.username)
+            //   .then(() => Logger.log(`Subscribed to topic ${this.username}!`));
+            // firebase.messaging().onMessage((payload) => {
+            //   console.log("Message received. ", payload);
+            // });
           });
       })
       .catch((err) => {
