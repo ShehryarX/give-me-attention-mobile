@@ -6,16 +6,18 @@ import {
   ScrollView,
   Dimensions,
   Image,
+  TouchableOpacity
 } from "react-native";
 import { Button } from "../../common/Button";
 import { FormTextInput } from "../../common/FormTextInput";
 import { HomeStore } from "./state";
 import { UserStore } from "../../stores/UserStore";
 import { COLOURS } from "../../config/colors";
-import { ContactCard } from "./ContactCard";
+import { ContactCard } from "../../common/ContactCard";
 import { observer } from "mobx-react";
 import { Logger } from "../../logging/Logger";
 import { ProfileActionController } from "../../controllers/ProfileActionController";
+import { ProfileController } from "../../controllers/ProfileController";
 
 @observer
 export class HomePage extends React.Component {
@@ -29,6 +31,20 @@ export class HomePage extends React.Component {
         contentContainerStyle={styles.containerContent}
       >
         <View style={styles.banner}>
+          <View style={styles.topBar}>
+            <TouchableOpacity 
+              onPress={() => this.props.navigation.navigate('Requests')}
+              style={styles.topButton}
+            >
+              <Text style={styles.topButtonText}>Friend Requests</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              onPress={() => this.props.navigation.navigate('AddFriend')}
+              style={styles.topButton}
+            >
+              <Text style={styles.topButtonText}>Add Friend</Text>
+            </TouchableOpacity>
+          </View>
           <Text style={styles.needAttention}>give me attention!</Text>
           <Image
             source={{
@@ -103,7 +119,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 36,
     letterSpacing: 2,
-    marginTop: 80,
+    marginTop: 40,
+  },
+  topBar: {
+    flexDirection: 'row',
+    width: Dimensions.get('window').width,
+    justifyContent: 'space-between'
+  },
+  topButton: {
+    padding: 15
+  },
+  topButtonText: {
+    color: COLOURS.DODGER_BLUE,
+    fontWeight: 'bold'
   },
   dp: {
     width: Dimensions.get("window").width * 0.4,

@@ -68,11 +68,11 @@ class ProfileControllerImpl {
   async sendFriendRequestToUsername(friendUsername) {
     await this.assertUsernameExists(friendUsername);
 
-    firebase
+    return firebase
       .database()
-      .ref(`users/${UserStore.username}/friendRequests/`)
+      .ref(`users/${friendUsername}/friendRequests/`)
       .push({
-        username: friendUsername,
+        username: UserStore.username,
       });
   }
 

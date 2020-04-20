@@ -10,6 +10,8 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { LeaderboardPage } from "./src/screens/leaderboard/LeaderboardPage";
+import { RequestsPage } from "./src/screens/requests/RequestsPage";
+import { AddFriendPage } from "./src/screens/add/AddFriendPage";
 import { ProfileController } from "./src/controllers/ProfileController";
 
 @observer
@@ -25,6 +27,8 @@ class App extends React.Component {
           <Stack.Screen name="Login" component={LoginPage}/>
           <Stack.Screen name="Home" component={HomePage}/>
           <Stack.Screen name="Leaderboard" component={LeaderboardPage}/>
+          <Stack.Screen name="AddFriend" component={AddFriendPage}/>
+          <Stack.Screen name="Requests" component={RequestsPage}/>
         </Stack.Navigator>
       </NavigationContainer>
     );

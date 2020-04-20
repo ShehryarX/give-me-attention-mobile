@@ -139,11 +139,15 @@ class UserStoreImpl {
                 );
                 userObj.pictureURL = pictureURL;
                 this.friendsList.push(userObj);
-                console.log(this.friendsList);
               }
             });
-            this.friendRequestsList =
-              databaseVal[this.username]["friendRequests"];
+            console.log(this.friendsList);
+            this.friendRequestsList = [];
+            Object.values(databaseVal[this.username]["friendRequests"]).forEach(val => {
+              if(val.username) {
+                this.friendRequestsList.push(val.username);
+              }
+            });
             firebase
               .messaging()
               .subscribeToTopic(this.username)

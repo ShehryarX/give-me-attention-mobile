@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, Image, Dimensions, TouchableOpacity } from "react-native";
-import { COLOURS } from "../../config/colors";
+import { COLOURS } from "../config/colors";
 
 export class ContactCard extends React.Component {
   constructor(props) {
