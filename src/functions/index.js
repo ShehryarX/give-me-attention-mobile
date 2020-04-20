@@ -12,26 +12,47 @@ admin.initializeApp(functions.config().firebase);
  *
  * For this to work, the client must be listening to the topic on it's current username.
  */
-exports.pushNotification = functions.database
-  .ref("/messages/{pushId}")
-  .onWrite((event) => {
-    const valueObject = event.after.val();
+// exports.pushNotification = functions.database
+//   .ref("/messages/{pushId}")
+//   .onWrite((event) => {
+//     const valueObject = event.after.val();
 
-    const payload = {
+//     const payload = {
+//       notification: {
+//         title: `${valueObject.from} needs some attention!`,
+//         sound: "default",
+//       },
+//     };
+
+//     console.log(
+//       `Push notification from ${valueObject.from} to ${valueObject.to}.`
+//     );
+
+//     const options = {
+//       priority: "high",
+//       timeToLive: 60 * 60 * 24,
+//     };
+
+//     return admin.messaging().sendToTopic(valueObject.to, payload, options);
+//   });
+
+exports.pushNotification = functions.database
+  .ref("users/{userID}")
+  .onCreate((event) => {
+    const data = event._data;
+    payload = {
       notification: {
-        title: `${valueObject.from} needs some attention!`,
-        sound: "default",
+        title: "Welcome",
+        body: "thank for installed our app",
       },
     };
-
-    console.log(
-      `Push notification from ${valueObject.from} to ${valueObject.to}.`
-    );
-
-    const options = {
-      priority: "high",
-      timeToLive: 60 * 60 * 24,
-    };
-
-    return admin.messaging().sendToTopic(valueObject.to, payload, options);
+    admin
+      .messaging()
+      .sendToDevice(data.notification_token, payload)
+      .then(function (response) {
+        console.log("Notification sent successfully:", response);
+      })
+      .catch(function (error) {
+        console.log("Notification sent failed:", error);
+      });
   });
