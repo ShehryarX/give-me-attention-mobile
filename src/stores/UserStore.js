@@ -161,11 +161,13 @@ class UserStoreImpl {
               }
             });
             this.friendRequestsList = [];
-            Object.values(databaseVal[this.username]["friendRequests"]).forEach(val => {
-              if(val.username) {
-                this.friendRequestsList.push(val.username);
+            Object.values(databaseVal[this.username]["friendRequests"]).forEach(
+              (val) => {
+                if (val.username) {
+                  this.friendRequestsList.push(val.username);
+                }
               }
-            });
+            );
             /* firebase
               .messaging()
               .subscribeToTopic(this.username)
@@ -174,6 +176,8 @@ class UserStoreImpl {
               console.log("Message received. ", payload);
             }); */
           });
+      });
+  }
 }
 
 export const UserStore = new UserStoreImpl();
